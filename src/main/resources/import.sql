@@ -13,3 +13,9 @@ INSERT INTO state VALUES(8,'2014-10-10','description',3);
 INSERT INTO state VALUES(9,'2014-10-10','description',3);
 INSERT INTO state VALUES(10,'2014-10-10','description',3);
 INSERT INTO state VALUES(11,'2014-10-10','description',3);
+
+INSERT INTO users VALUES (1,TRUE ,TRUE ,TRUE ,TRUE,'m@m.ru','123','user1');
+INSERT INTO users VALUES (2,TRUE ,TRUE ,TRUE ,TRUE,'m@m.ru','123','user2');
+
+INSERT INTO roles VALUES (1,'ROLE_ADMIN');
+INSERT INTO roles VALUES (2,'ROLE_USER');

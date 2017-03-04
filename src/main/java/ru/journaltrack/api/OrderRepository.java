@@ -2,9 +2,7 @@ package ru.journaltrack.api;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import ru.journaltrack.pojo.Order;
-
-import java.util.List;
+import ru.journaltrack.Domain.Order;
 
 public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
 
