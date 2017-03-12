@@ -1,19 +1,19 @@
 package ru.journaltrack.Services;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import ru.journaltrack.api.UserRepository;
+import ru.journaltrack.domain.User;
+import ru.journaltrack.domain.UserCreateForm;
 
-@Service
-public class UserService implements UserDetailsService{
-    @Autowired
-    private UserRepository userRepository;
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userRepository.findByUsername(name).orElseThrow(()->new UsernameNotFoundException("User"+name+" was not found"));
-    }
+import java.util.List;
+import java.util.Optional;
+
+public interface UserService {
+    Optional<User> getUserById(long id);
+
+    Optional<User> getUserByUsername(String username);
+
+    List<User> findByUsernameNotLike(String username);
+
+    User create(UserCreateForm form);
+
 }

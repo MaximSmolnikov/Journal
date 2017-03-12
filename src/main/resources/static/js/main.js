@@ -15,6 +15,7 @@ function send(id) {
         date: data[0].value,
         description: data[1].value
     };
+
     $.ajax({
         type: "POST",
         url: "/add/" + id,

@@ -1,4 +1,4 @@
-package ru.journaltrack.Domain;
+package ru.journaltrack.domain;
 
 
 import lombok.Getter;

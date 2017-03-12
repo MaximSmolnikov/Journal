@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${form}" action="/user/create" method="post">
+
+    <div>
+        <input type="text" name="username" id="username"  th:field="*{username}"/>
+    </div>
+    <div>
+        <input type="password" name="password" id="password" th:field="*{password}" />
+    </div>
+    <div>
+        <input type="email" name="mail" th:field="*{mail}" />
+    </div>
+    <div>
+        <label >Role</label>
+        <select th:field="*{authorities}" id="role" >
+            <option th:value="USER" >USER</option>
+            <option th:value="PROVIDER">PROVIDER</option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
+</form>
+<li th:text="${error}"></li>
+</body>
+</html>

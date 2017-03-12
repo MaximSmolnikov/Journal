@@ -2,14 +2,17 @@ package ru.journaltrack.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.journaltrack.api.OrderRepository;
-import ru.journaltrack.api.OrderService;
-import ru.journaltrack.api.StateRepository;
-import ru.journaltrack.Domain.Order;
-import ru.journaltrack.Domain.State;
+import ru.journaltrack.repository.OrderRepository;
+import ru.journaltrack.Services.OrderService;
+import ru.journaltrack.repository.StateRepository;
+import ru.journaltrack.domain.Order;
+import ru.journaltrack.domain.State;
+
+import java.security.Principal;
 
 @Controller
 public class OrderController {
@@ -17,13 +20,11 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private StateRepository stateRepository;
-    @Autowired
-    private OrderRepository orderRepository;
 
     @RequestMapping(value = "/orders")
-    public String home(Model model,@RequestParam(value = "page",defaultValue = "1") int pageNumber) {
-        Page<Order> page = orderService.getPage(pageNumber);
-
+    public String home(Pageable pageable, Model model, Principal principal) {
+        Page<Order> page = orderService.getPage(pageable,principal.getName());
+        System.out.println(page.getContent());
         int current = page.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, page.getTotalPages());

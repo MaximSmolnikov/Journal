@@ -1,21 +1,21 @@
-package ru.journaltrack.api;
+package ru.journaltrack.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
-import ru.journaltrack.Domain.Order;
+import ru.journaltrack.domain.Order;
+import ru.journaltrack.repository.OrderRepository;
 
 @Service
 public class OrderService  {
-    private static final int PAGE_SIZE = 2;
     @Autowired
     OrderRepository orderRepository;
-    public Page<Order> getPage(Integer pageNumber) {
-        PageRequest pageRequest=
-                new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.DESC, "name");
-        return orderRepository.findAll(pageRequest);
+    public Page<Order> getPage(Pageable pageable, String username) {
+        return orderRepository.findOrdersBelongsUsername(username,pageable);
     }
     public void save(Order order){
         orderRepository.save(order);

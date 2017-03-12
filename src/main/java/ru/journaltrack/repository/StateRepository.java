@@ -1,7 +1,7 @@
-package ru.journaltrack.api;
+package ru.journaltrack.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import ru.journaltrack.Domain.State;
+import ru.journaltrack.domain.State;
 
 public interface StateRepository extends PagingAndSortingRepository<State,Long> {
 }
