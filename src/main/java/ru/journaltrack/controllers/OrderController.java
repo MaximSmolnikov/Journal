@@ -6,11 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.journaltrack.repository.OrderRepository;
 import ru.journaltrack.Services.OrderService;
-import ru.journaltrack.repository.StateRepository;
 import ru.journaltrack.domain.Order;
 import ru.journaltrack.domain.State;
+import ru.journaltrack.repository.StateRepository;
 
 import java.security.Principal;
 
@@ -24,16 +23,10 @@ public class OrderController {
     @RequestMapping(value = "/orders")
     public String home(Pageable pageable, Model model, Principal principal) {
         Page<Order> page = orderService.getPage(pageable,principal.getName());
-        System.out.println(page.getContent());
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
 
+        int begin = Math.max(1, page.getNumber() - 5);
         model.addAttribute("orders", page);
         model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
 
         model.addAttribute("order",new Order());
         return "index";

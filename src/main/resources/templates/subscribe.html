@@ -48,18 +48,18 @@
     </nav>
 </div>
 <div class="container">
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+    <form class="form-horizontal" role="form" th:object="${form}" action="/subscribe" method="post">
+        <div class="row">
+            <div class="col-sm-5">
+                <input class="form-control" type="text" th:field="*{username}"/>
+                <select class="form-control" th:field="*{orderId}">
+                    <option value="Заказ/услуга" disabled="disabled" selected="selected"/>
+                    <option th:each="order : ${orders}" th:value="${order.id}" th:text="${order.name}"></option>
+                </select>
+                <button class="btn btn-default" type="submit">Добавить</button>
+            </div>
+        </div>
+    </form>
 </div>
 <!--<div sec:authorize="hasRole('PROVIDER')" id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

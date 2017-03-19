@@ -2,13 +2,12 @@ package ru.journaltrack.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import ru.journaltrack.domain.Order;
 import ru.journaltrack.repository.OrderRepository;
+
+import java.util.List;
 
 @Service
 public class OrderService  {
@@ -22,5 +21,9 @@ public class OrderService  {
     }
     public Order findOne(Long id){
         return orderRepository.findOne(id);
+    }
+
+    public List<Order> findAll() {
+        return (List<Order>) orderRepository.findAll();
     }
 }

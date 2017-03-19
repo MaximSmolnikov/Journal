@@ -1,10 +1,13 @@
 package ru.journaltrack.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.journaltrack.domain.Order;
 import ru.journaltrack.domain.User;
-import ru.journaltrack.domain.UserCreateForm;
+import ru.journaltrack.domain.form.UserCreateForm;
+import ru.journaltrack.domain.form.UserSubscribeForm;
 import ru.journaltrack.repository.UserRepository;
 
 import java.util.List;
@@ -16,6 +19,8 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     BCryptPasswordEncoder encoder;
+    @Autowired
+    OrderService orderService;
 
     @Override
     public Optional<User> getUserById(long id) {
@@ -41,5 +46,15 @@ public class UserServiceImpl implements UserService{
         user.setMail(form.getMail());
         user.setPassword(encoder.encode(form.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public void subscribe(UserSubscribeForm form) {
+        //exception
+        User user = userRepository.findByUsername(form.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User was not found"));
+        Order order = orderService.findOne(form.getOrderId());
+        user.getOrders().add(order);
+        order.getUsers().add(user);
+        userRepository.save(user);
     }
 }

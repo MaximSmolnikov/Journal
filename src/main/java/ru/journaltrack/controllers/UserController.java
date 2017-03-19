@@ -5,31 +5,26 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.journaltrack.domain.User;
-import ru.journaltrack.domain.UserCreateForm;
+import ru.journaltrack.Services.OrderService;
 import ru.journaltrack.Services.UserService;
-import ru.journaltrack.validator.UserCreateFormValidator;
+import ru.journaltrack.domain.form.UserCreateForm;
+import ru.journaltrack.domain.form.UserSubscribeForm;
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class UserController {
     private UserService userService;
-    private UserCreateFormValidator userCreateFormValidator;
+    private OrderService orderService;
 
     @Autowired
-    public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator) {
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
-        this.userCreateFormValidator = userCreateFormValidator;
-    }
-    @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.addValidators(userCreateFormValidator);
+        this.orderService = orderService;
     }
 
     @GetMapping(value = "/user/create")
@@ -51,11 +46,17 @@ public class UserController {
         }
         return "redirect:/";
     }
-    @GetMapping(value = "/users")
-    public String users(Model model,Principal principal){
-/*        List<User> users= userService.findByUsernameNotLike(principal.getName());
-        model.addAttribute("users",users);*/
 
-        return "users";
+    @GetMapping(value = "/subscribe")
+    public String subscribe(Model model) {
+        model.addAttribute("form", new UserSubscribeForm());
+        model.addAttribute("orders", orderService.findAll());
+        return "subscribe";
+    }
+
+    @PostMapping(value = "/subscribe")
+    public String subscribe(@ModelAttribute("form") UserSubscribeForm form) {
+        userService.subscribe(form);
+        return "redirect:/subscribe";
     }
 }

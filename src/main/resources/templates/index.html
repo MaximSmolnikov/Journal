@@ -30,16 +30,16 @@
                 <li class="active"><a href="/">Главная <span class="sr-only"></span></a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Заказы</a></li>
                 <li sec:authorize="hasRole('PROVIDER')"><a data-toggle="modal" href="#myModal">Добавить заказ</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/users}">Заказчики</a></li>
+                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Добавить заказчика</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul th:if="${#authorization.expression('isAuthenticated()')}" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a sec:authentication="name" href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Редактировать</a></li>
                         <li><a href="#">Помощь</a></li>
                         <li class="divider"></li>
-                        <li th:if="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/logout}">Выход</a></li>
+                        <li><a th:href="@{/logout}">Выход</a></li>
                     </ul>
                 </li>
             </ul>
@@ -81,20 +81,22 @@
         </div>
     </div>
 </div>
-<div th:if="${beginIndex &lt; endIndex}" class="container">
+<div th:if="${beginIndex &lt; orders.getTotalPages()}" class="container">
     <ul class="pagination">
-        <li th:class="${currentIndex==1}?'disabled':''">
-            <span th:if=" ${currentIndex==1}">First</span>
-            <a th:if="${currentIndex!=1}" th:href="@{/orders?page=1}">First</a>
+        <li th:class="${orders.getNumber()==0}?'disabled':''">
+            <span th:if=" ${orders.getNumber()==0}">First</span>
+            <a th:if="${orders.getNumber()!=0}" th:href="@{/orders?page=0&amp;size=10}">First</a>
         </li>
-        <li th:each="i:${#numbers.sequence(beginIndex,endIndex)}" th:class="${currentIndex==i?'active':''}">
-            <span th:if="${i==currentIndex}" th:text="${i}"></span>
-            <a th:if="${i!=currentIndex}" th:href="@{|/orders?page=${i}|}" th:text="${i}"> </a>
+        <li th:each="i:${#numbers.sequence(beginIndex,orders.getTotalPages())}"
+            th:class="${orders.getNumber()==i-1?'active':''}">
+            <span th:if="${i-1==orders.getNumber()}" th:text="${i}"></span>
+            <a th:if="${i-1!=orders.getNumber()}" th:href="@{|/orders?page=${i-1}&amp;size=10|}" th:text="${i}"> </a>
         </li>
 
-        <li th:class="${currentIndex==endIndex}?'disabled':''">
-            <span th:if=" ${currentIndex==endIndex}">Last</span>
-            <a th:if="${currentIndex!=endIndex}" th:href="@{|/orders?page=${endIndex}|}">Last</a>
+        <li th:class="${orders.getNumber()+1==orders.getTotalPages()}?'disabled':''">
+            <span th:if=" ${orders.getNumber()==orders.getTotalPages()}">Last</span>
+            <a th:if="${orders.getNumber()!=orders.getTotalPages()}"
+               th:href="@{|/orders?page=${orders.getTotalPages()}&amp;size=10|}">Last</a>
         </li>
 
     </ul>

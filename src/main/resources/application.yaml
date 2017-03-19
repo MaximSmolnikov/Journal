@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/Journal
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+
+  thymeleaf:
+    cache: false
+
+  jpa:
+    show-sql: true
