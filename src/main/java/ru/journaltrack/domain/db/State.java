@@ -1,4 +1,4 @@
-package ru.journaltrack.domain;
+package ru.journaltrack.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

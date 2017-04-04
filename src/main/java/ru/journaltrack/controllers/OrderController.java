@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.journaltrack.Services.OrderService;
-import ru.journaltrack.domain.Order;
-import ru.journaltrack.domain.State;
+import ru.journaltrack.domain.db.Order;
+import ru.journaltrack.domain.db.State;
 import ru.journaltrack.repository.StateRepository;
+import ru.journaltrack.services.OrderService;
 
 import java.security.Principal;
 
@@ -20,7 +20,7 @@ public class OrderController {
     @Autowired
     private StateRepository stateRepository;
 
-    @RequestMapping(value = "/orders")
+    @GetMapping(value = "/orders")
     public String home(Pageable pageable, Model model, Principal principal) {
         Page<Order> page = orderService.getPage(pageable,principal.getName());
 
@@ -32,17 +32,15 @@ public class OrderController {
         return "index";
     }
 
-    @RequestMapping(value = "/add/{id}")
+    @PostMapping(value = "/add/{id}")
     public @ResponseBody void addState(@RequestBody State state , @PathVariable Long id){
-        System.out.println(id);
         Order order = orderService.findOne(id);
         state.setOrder(order);
-        System.out.println(state);
         stateRepository.save(state);
     }
     @PostMapping(value = "/neworder")
-    public String addOrder(@ModelAttribute Order order){
-        orderService.save(order);
+    public String addOrder(@ModelAttribute Order order, Principal principal) {
+        orderService.save(order, principal);
         return "redirect:/orders";
     }
 }

@@ -1,7 +1,7 @@
-package ru.journaltrack.Services;
+package ru.journaltrack.services;
 
 
-import ru.journaltrack.domain.User;
+import ru.journaltrack.domain.db.User;
 import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
 

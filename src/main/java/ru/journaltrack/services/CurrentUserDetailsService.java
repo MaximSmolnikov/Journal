@@ -1,12 +1,12 @@
-package ru.journaltrack.Services;
+package ru.journaltrack.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.journaltrack.domain.User;
 import ru.journaltrack.domain.CurrentUser;
+import ru.journaltrack.domain.db.User;
 
 @Service
 public class CurrentUserDetailsService implements UserDetailsService{

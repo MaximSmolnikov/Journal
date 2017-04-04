@@ -2,6 +2,7 @@ package ru.journaltrack.domain;
 
 
 import org.springframework.security.core.authority.AuthorityUtils;
+import ru.journaltrack.domain.db.User;
 
 public class CurrentUser extends  org.springframework.security.core.userdetails.User{
     private User user;

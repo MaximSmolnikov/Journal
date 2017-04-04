@@ -1,7 +1,6 @@
 package ru.journaltrack.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,12 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.journaltrack.Services.OrderService;
-import ru.journaltrack.Services.UserService;
 import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
+import ru.journaltrack.services.OrderService;
+import ru.journaltrack.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -34,23 +34,17 @@ public class UserController {
 
     @PostMapping(value = "/user/create")
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
-        System.out.println(form);
         if (bindingResult.hasErrors()) {
             return "user_create";
         }
-        try {
-            userService.create(form);
-        } catch (DataIntegrityViolationException e) {
-            bindingResult.reject("email.exists", "Email already exists");
-            return "user_create";
-        }
+        userService.create(form);
         return "redirect:/";
     }
 
     @GetMapping(value = "/subscribe")
-    public String subscribe(Model model) {
+    public String subscribe(Model model, Principal principal) {
         model.addAttribute("form", new UserSubscribeForm());
-        model.addAttribute("orders", orderService.findAll());
+        model.addAttribute("orders", orderService.findAll(principal.getName()));
         return "subscribe";
     }
 

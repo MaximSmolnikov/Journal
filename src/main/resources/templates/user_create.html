@@ -33,8 +33,8 @@
                         <p class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
                         <label for="role">Role</label>
                         <select class="form-control" th:field="*{authorities}" id="role">
-                            <option th:value="USER">USER</option>
-                            <option th:value="PROVIDER">PROVIDER</option>
+                            <option th:value="USER">Обычный пользователь</option>
+                            <option th:value="PROVIDER">Поставщик услуг</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-labeled btn-success">

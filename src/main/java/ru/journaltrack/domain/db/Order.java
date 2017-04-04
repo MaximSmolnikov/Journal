@@ -1,9 +1,10 @@
-package ru.journaltrack.domain;
+package ru.journaltrack.domain.db;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Order extends AbstractIdentfied{
   @OneToMany(fetch = FetchType.EAGER,mappedBy = "order",cascade = CascadeType.ALL)
   private List<State> states;
   @ManyToMany(fetch = FetchType.EAGER,mappedBy = "orders")
-  private Set<User> users;
+  private Set<User> users = new HashSet<>();
   @Override
   public String toString() {
     return "Order{" +

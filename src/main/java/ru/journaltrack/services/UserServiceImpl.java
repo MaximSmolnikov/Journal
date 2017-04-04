@@ -1,11 +1,11 @@
-package ru.journaltrack.Services;
+package ru.journaltrack.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.journaltrack.domain.Order;
-import ru.journaltrack.domain.User;
+import ru.journaltrack.domain.db.Order;
+import ru.journaltrack.domain.db.User;
 import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
 import ru.journaltrack.repository.UserRepository;

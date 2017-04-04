@@ -2,7 +2,7 @@ package ru.journaltrack.repository;
 
 
 import org.springframework.data.repository.CrudRepository;
-import ru.journaltrack.domain.User;
+import ru.journaltrack.domain.db.User;
 
 import java.util.List;
 import java.util.Optional;
