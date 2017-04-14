@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-
-    <script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"/>
-    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"/>
-    <script src="https://unpkg.com/hybind@latest/index.js"></script>
-    <script th:src="@{/js/main.js}"/>
-    <title>Journal</title>
-</head>
+<head th:include="fragment/templ :: header"></head>
 <body>
 <div class="container">
     <nav class="navbar navbar-inverse">
@@ -30,8 +18,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Главная <span class="sr-only"></span></a></li>
                 <li sec:authorize="isAuthenticated()"><a href="/orders">Заказы</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a data-toggle="modal" href="#myModal">Добавить заказ</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/}">Заказчики</a></li>
+                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Заказчики</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -61,30 +48,5 @@
         </div>
     </form>
 </div>
-<!--<div sec:authorize="hasRole('PROVIDER')" id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Запоните данные формы</h4>
-            </div>
-            <div class="modal-body">
-                <form th:object="${order}" class="form-horizontal" method="post" action="/neworder">
-                    <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Название услуги</label>
-                        <div class="col-sm-10">
-                            <input th:field="*{name}" type="text" class="form-control" id="inputName" placeholder="Услуга"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Добавить</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
 </body>
 </html>

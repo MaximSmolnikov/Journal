@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragment/templ :: header"></head>
+<body>
+<div class="container" th:include="fragment/templ :: menu"></div>
+<div class="container">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default" th:each="order:${orders}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" th:href="${'#'+order.id}"
+                       th:text="${order.name}"></a>
+                </h4>
+            </div>
+            <div th:id="${order.id}" class="panel-collapse collapse">
+                <div sec:authorize="hasRole('PROVIDER')" class="panel-body">
+                    <form th:id="|form${order.id}|" th:method="POST" action="javascript:void(null)"
+                          th:onsubmit="|send(${order.id})|">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <input type="date" name="date"/>
+                            </div>
+                            <div id="addstate" class="col-sm-8">
+                                <textarea rows="1" name="description"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="submit" value="Добавить"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body" th:each="state:${order.states}">
+                    <div class="row">
+                        <div class="col-sm-2" th:text="${state.date}"></div>
+                        <div class="col-sm-10" th:text="${state.description}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

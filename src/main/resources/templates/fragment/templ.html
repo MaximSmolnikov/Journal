@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="fragment/templ :: header"></head>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="header">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"/>
+    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"/>
+    <script th:src="@{/js/main.js}"/>
+    <title>Journal</title>
+</head>
 <body>
-<div class="container">
+<div class="container" th:fragment="menu">
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu"
@@ -17,12 +26,14 @@
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Главная <span class="sr-only"></span></a></li>
-                <li sec:authorize="isAuthenticated()"><a href="/orders">Заказы</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Заказчики</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Заказы</a></li>
+                <li sec:authorize="hasRole('PROVIDER')"><a data-toggle="modal" href="#myModal">Добавить заказ</a></li>
+                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Добавить заказчика</a></li>
             </ul>
             <ul th:if="${#authorization.expression('isAuthenticated()')}" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a sec:authentication="name" href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b class="caret"></b></a>
+                    <a sec:authentication="name" href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b
+                            class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Редактировать</a></li>
                         <li><a href="#">Помощь</a></li>
@@ -30,9 +41,6 @@
                         <li><a th:href="@{/logout}">Выход</a></li>
                     </ul>
                 </li>
-            </ul>
-            <ul th:if="${!#authorization.expression('isAuthenticated()')}" class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/login}">Вход в систему</a></li>
             </ul>
         </div>
     </nav>

@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/formstyle.css}" rel="stylesheet" media="screen"/>
-    <script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"/>
-    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"/>
-    <script th:src="@{/js/main.js}"/>
-    <title>Journal</title>
-</head>
+<head th:include="fragment/templ :: header"></head>
 <body>
 <div class="container">
     <div class="form">
