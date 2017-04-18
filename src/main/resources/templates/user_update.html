@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/templ :: header"></head>
+<body>
+<div class="container" th:include="fragment/templ :: menu"></div>
+<div class="container">
+    <form th:object="${form}" action="/user/update" method="post">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Логин" name="username" id="username"
+                   th:field="*{username}"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <input type="password" class="form-control" placeholder="Пароль" name="password" id="password"
+                   th:field="*{password}"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            <input type="email" class="form-control" placeholder="Почта" name="mail" th:field="*{mail}"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+            <label for="role">Role</label>
+            <select class="form-control" th:field="*{authorities}" id="role">
+                <option th:value="USER">Обычный пользователь</option>
+                <option th:value="PROVIDER">Поставщик услуг</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-labeled btn-success">
+            <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>Обновить данные
+        </button>
+    </form>
+</div>
+</body>
+</html>

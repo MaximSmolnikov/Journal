@@ -9,6 +9,7 @@ import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
 import ru.journaltrack.repository.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,15 @@ public class UserServiceImpl implements UserService{
         Order order = orderService.findOne(form.getOrderId());
         user.getOrders().add(order);
         order.getUsers().add(user);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void update(UserCreateForm form, Principal principal) {
+        User user = userRepository.findByUsername(principal.getName()).get();
+        user.setUsername(form.getUsername());
+        user.setMail(form.getMail());
+        user.setAuthorities(form.getAuthorities());
         userRepository.save(user);
     }
 }

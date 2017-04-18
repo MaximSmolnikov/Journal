@@ -5,6 +5,7 @@ import ru.journaltrack.domain.db.User;
 import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,5 +19,7 @@ public interface UserService {
     User create(UserCreateForm form);
 
     void subscribe(UserSubscribeForm form);
+
+    void update(UserCreateForm form, Principal principal);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import ru.journaltrack.domain.db.User;
 import ru.journaltrack.domain.form.UserCreateForm;
 import ru.journaltrack.domain.form.UserSubscribeForm;
 import ru.journaltrack.services.OrderService;
@@ -38,6 +39,25 @@ public class UserController {
             return "user_create";
         }
         userService.create(form);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/user/update")
+    public ModelAndView updateUser(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName()).get();
+        UserCreateForm userCreateForm = new UserCreateForm();
+        userCreateForm.setAuthorities(user.getAuthorities());
+        userCreateForm.setMail(user.getMail());
+        userCreateForm.setUsername(user.getUsername());
+        return new ModelAndView("user_update", "form", userCreateForm);
+    }
+
+    @PostMapping(value = "/user/update")
+    public String updateUser(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "user_update";
+        }
+        userService.update(form, principal);
         return "redirect:/";
     }
 
