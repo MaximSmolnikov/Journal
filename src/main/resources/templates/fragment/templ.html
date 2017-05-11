@@ -5,9 +5,12 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/formstyle.css}" rel="stylesheet" media="screen"/>
     <script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"/>
     <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"/>
     <script th:src="@{/js/main.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <title>Journal</title>
 </head>
 <body>
@@ -25,10 +28,10 @@
         </div>
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Главная <span class="sr-only"></span></a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Заказы</a></li>
+                <li class="active"><a href="/"><span class="glyphicon glyphicon-home"/> Главная</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/orders?size=10}"><span class="glyphicon glyphicon-list-alt"/> Заказы</a></li>
                 <li sec:authorize="hasRole('PROVIDER')"><a data-toggle="modal" href="#myModal">Добавить заказ</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Добавить заказчика</a></li>
+                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}"><span class="glyphicon glyphicon-user"/> Добавить заказчика</a></li>
             </ul>
             <ul th:if="${#authorization.expression('isAuthenticated()')}" class="nav navbar-nav navbar-right">
                 <li class="dropdown">

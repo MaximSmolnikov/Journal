@@ -1,87 +1,106 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragment/templ :: header"></head>
 <body>
 <div class="container" th:include="fragment/templ :: menu"></div>
 <div class="container">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default" th:each="order:${orders}">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" th:href="${'#'+order.id}"
-                       th:text="${order.name}"></a>
-                </h4>
-            </div>
-            <div th:id="${order.id}" class="panel-collapse collapse">
-                <div sec:authorize="hasRole('PROVIDER')" class="panel-body">
-                    <form th:id="|form${order.id}|" th:method="POST" action="javascript:void(null)" th:onsubmit="|send(${order.id})|">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <input type="date" name="date"/>
-                            </div>
-                            <div id="addstate" class="col-sm-8">
-                                <textarea rows="1" name="description"/>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="submit" value="Добавить"/>
-                            </div>
-                        </div>
-                    </form>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default" th:each="order:${orders}">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" th:href="${'#'+order.id}"
+             th:text="${order.name}"></a>
+        </h4>
+      </div>
+      <div th:id="${order.id}" class="panel-collapse collapse">
+        <div sec:authorize="hasRole('PROVIDER')" class="panel-body">
+          <form th:id="|form${order.id}|" th:method="POST" action="javascript:void(null)"
+                th:onsubmit="|send(${order.id})|">
+            <div class="row">
+              <div class="col-sm-2">
+                <div class='class="form-group' >
+                  <input class="form-control" id="date" name="date" placeholder="yyyy-mm-dd" type="text"/>
                 </div>
-                <div class="panel-body" th:each="state:${order.states}">
-                    <div class="row">
-                        <div class="col-sm-2" th:text="${state.date}"></div>
-                        <div class="col-sm-10" th:text="${state.description}"></div>
-                    </div>
-                </div>
+              </div>
+              <div id="addstate" class="col-sm-8">
+                <textarea rows="1" cols="90" name="description"/>
+              </div>
+              <div class="col-sm-2">
+                <input type="submit" class="btn btn-primary " value="Добавить"/>
+              </div>
             </div>
+          </form>
         </div>
+        <div class="panel-body" th:each="state:${order.states}">
+          <div class="row">
+            <div class="col-sm-2" th:text="${state.date}"></div>
+            <div class="col-sm-10" th:text="${state.description}"></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div th:if="${beginIndex &lt; orders.getTotalPages()}" class="container">
-    <ul class="pagination">
-        <li th:class="${orders.getNumber()==0}?'disabled':''">
-            <span th:if=" ${orders.getNumber()==0}">First</span>
-            <a th:if="${orders.getNumber()!=0}" th:href="@{/orders?page=0&amp;size=10}">First</a>
-        </li>
-        <li th:each="i:${#numbers.sequence(beginIndex,orders.getTotalPages())}"
-            th:class="${orders.getNumber()==i-1?'active':''}">
-            <span th:if="${i-1==orders.getNumber()}" th:text="${i}"></span>
-            <a th:if="${i-1!=orders.getNumber()}" th:href="@{|/orders?page=${i-1}&amp;size=10|}" th:text="${i}"> </a>
-        </li>
+  <ul class="pagination">
+    <li th:class="${orders.getNumber()==0}?'disabled':''">
+      <span th:if=" ${orders.getNumber()==0}">First</span>
+      <a th:if="${orders.getNumber()!=0}" th:href="@{/orders?page=0&amp;size=10}">First</a>
+    </li>
+    <li th:each="i:${#numbers.sequence(beginIndex,orders.getTotalPages())}"
+        th:class="${orders.getNumber()==i-1?'active':''}">
+      <span th:if="${i-1==orders.getNumber()}" th:text="${i}"></span>
+      <a th:if="${i-1!=orders.getNumber()}" th:href="@{|/orders?page=${i-1}&amp;size=10|}"
+         th:text="${i}"> </a>
+    </li>
 
-        <li th:class="${orders.getNumber()+1==orders.getTotalPages()}?'disabled':''">
-            <span th:if=" ${orders.getNumber()==orders.getTotalPages()}">Last</span>
-            <a th:if="${orders.getNumber()!=orders.getTotalPages()}"
-               th:href="@{|/orders?page=${orders.getTotalPages()}&amp;size=10|}">Last</a>
-        </li>
+    <li th:class="${orders.getNumber()+1==orders.getTotalPages()}?'disabled':''">
+      <span th:if=" ${orders.getNumber()==orders.getTotalPages()}">Last</span>
+      <a th:if="${orders.getNumber()!=orders.getTotalPages()}"
+         th:href="@{|/orders?page=${orders.getTotalPages()-1}&amp;size=10|}">Last</a>
+    </li>
 
-    </ul>
+  </ul>
 </div>
 <div sec:authorize="hasRole('PROVIDER')" id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Запоните данные формы</h4>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Запоните данные формы</h4>
+      </div>
+      <div class="modal-body">
+        <form th:object="${order}" class="form-horizontal" method="post" action="/neworder">
+          <div class="form-group">
+            <label for="inputName" class="col-sm-2 control-label">Название услуги</label>
+            <div class="col-sm-10">
+              <input th:field="*{name}" type="text" class="form-control" id="inputName"
+                     placeholder="Услуга"/>
             </div>
-            <div class="modal-body">
-                <form th:object="${order}" class="form-horizontal" method="post" action="/neworder">
-                    <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Название услуги</label>
-                        <div class="col-sm-10">
-                            <input th:field="*{name}" type="text" class="form-control" id="inputName" placeholder="Услуга"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Добавить</button>
-                        </div>
-                    </div>
-                </form>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Добавить</button>
             </div>
-        </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+<script>
+  $(document).ready(function(){
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    var options={
+      format: 'yyyy-mm-dd',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    };
+    date_input.datepicker(options);
+  })
+</script>
 </body>
 </html>

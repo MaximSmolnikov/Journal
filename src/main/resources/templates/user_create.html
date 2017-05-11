@@ -6,8 +6,7 @@
     <div class="form">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">
-                    Авторизация на сайте</h3>
+                <h3 class="panel-title">Регистрация на сайте</h3>
             </div>
             <div class="panel-body">
                 <form th:object="${form}" action="/user/create" method="post">
@@ -20,7 +19,7 @@
                         <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         <input type="email" class="form-control" placeholder="Почта" name="mail" th:field="*{mail}"/>
                         <p class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
-                        <label for="role">Role</label>
+                        <label for="role">Роль в сиcтеме</label>
                         <select class="form-control" th:field="*{authorities}" id="role">
                             <option th:value="USER">Обычный пользователь</option>
                             <option th:value="PROVIDER">Поставщик услуг</option>

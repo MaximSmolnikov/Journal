@@ -1,52 +1,63 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragment/templ :: header"></head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu"
-                    aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="#" class="navbar-brand">Бренд</a>
-        </div>
-        <div class="collapse navbar-collapse" id="main-menu">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Главная <span class="sr-only"></span></a></li>
-                <li sec:authorize="isAuthenticated()"><a href="/orders">Заказы</a></li>
-                <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}">Заказчики</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a sec:authentication="name" href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Редактировать</a></li>
-                        <li><a href="#">Помощь</a></li>
-                        <li class="divider"></li>
-                        <li><a th:href="@{/logout}">Выход</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#main-menu"
+              aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand">Бренд</a>
+    </div>
+    <div class="collapse navbar-collapse" id="main-menu">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"/> Главная <span
+            class="sr-only"></span></a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/orders?size=10"><span class="glyphicon glyphicon-list-alt"/> Заказы</a></li>
+        <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}"><span class="glyphicon glyphicon-user"/> Заказчики</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a sec:authentication="name" href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b
+              class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Редактировать</a></li>
+            <li><a href="#">Помощь</a></li>
+            <li class="divider"></li>
+            <li><a th:href="@{/logout}">Выход</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
 <div class="container">
-    <form class="form-horizontal" role="form" th:object="${form}" action="/subscribe" method="post">
-        <div class="row">
-            <div class="col-sm-5">
-                <input class="form-control" type="text" th:field="*{username}"/>
-                <select class="form-control" th:field="*{orderId}">
-                    <option value="Заказ/услуга" disabled="disabled" selected="selected"/>
-                    <option th:each="order : ${orders}" th:value="${order.id}" th:text="${order.name}"></option>
-                </select>
-                <button class="btn btn-default" type="submit">Добавить</button>
-            </div>
+  <form class="form-horizontal" role="form" th:object="${form}" action="/subscribe" method="post">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-user"/></span>
+          <input class="form-control" type="text" th:field="*{username}"/>
         </div>
-    </form>
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></span>
+          <select class="form-control" th:field="*{orderId}">
+            <option value="Заказ/услуга" disabled="disabled" selected="selected"/>
+            <option th:each="order : ${orders}" th:value="${order.id}"
+                    th:text="${order.name}"></option>
+          </select>
+        </div>
+        <button class="btn btn-default" type="submit">Добавить</button>
+      </div>
+    </div>
+  </form>
 </div>
 </body>
 </html>
