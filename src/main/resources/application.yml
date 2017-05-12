@@ -1,9 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/Journal
-    username: postgres
-    password: 123
+#    url: jdbc:postgresql://localhost/Journal
+#    username: postgres
+#    password: 123
     driver-class-name: org.postgresql.Driver
+    url: postgres://jvmlftjsqqxhzb:77eed736be8394d4b9e58c07c5a7b70dfbd4d026ac609863c5617effbb96bd43@ec2-54-225-236-102.compute-1.amazonaws.com:5432/d1p4rjd3nck7pd
 
   thymeleaf:
     cache: false
