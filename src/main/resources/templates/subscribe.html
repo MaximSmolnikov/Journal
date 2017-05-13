@@ -18,10 +18,10 @@
     </div>
     <div class="collapse navbar-collapse" id="main-menu">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"/> Главная <span
+        <li ><a href="/"><span class="glyphicon glyphicon-home"/> Главная <span
             class="sr-only"></span></a></li>
         <li sec:authorize="isAuthenticated()"><a href="/orders?size=10"><span class="glyphicon glyphicon-list-alt"/> Заказы</a></li>
-        <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}"><span class="glyphicon glyphicon-user"/> Заказчики</a></li>
+        <li class="active" sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}"><span class="glyphicon glyphicon-user"/> Заказчики</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

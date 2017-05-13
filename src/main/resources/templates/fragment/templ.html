@@ -28,7 +28,7 @@
         </div>
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/"><span class="glyphicon glyphicon-home"/> Главная</a></li>
+                <li ><a href="/"><span class="glyphicon glyphicon-home"/> Главная</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/orders?size=10}"><span class="glyphicon glyphicon-list-alt"/> Заказы</a></li>
                 <li sec:authorize="hasRole('PROVIDER')"><a data-toggle="modal" href="#myModal">Добавить заказ</a></li>
                 <li sec:authorize="hasRole('PROVIDER')"><a th:href="@{/subscribe}"><span class="glyphicon glyphicon-user"/> Добавить заказчика</a></li>
