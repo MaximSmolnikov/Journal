@@ -13,13 +13,18 @@ import java.util.Date;
 @Entity
 @JsonIgnoreProperties({"order"})
 public class State extends AbstractIdentfied {
+
   @Temporal(TemporalType.DATE)
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   private Date date;
+
   private String description;
+
   @ManyToOne
   @JoinColumn(name = "id_order")
   private Order order;
+
+  private boolean status;
 
   @Override
   public String toString() {

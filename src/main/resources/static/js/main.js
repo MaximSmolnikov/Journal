@@ -1,9 +1,5 @@
 $(document).ready(function () {
-  $("#addstate").keypress(function (e) {
-    if (e.keyCode == 13) {
-      //нажата клавиша enter - здесь ваш код
-    }
-  });
+
 
 });
 
@@ -29,3 +25,24 @@ function send(id) {
 
 }
 
+function sendOrder(id){
+  // var status= $('#toggle'+id).prop("checked");
+  // var name = $('a[href="#'+id+'"]').text();
+  // console.log(name);
+  // var response ={
+  //   id:id,
+  //   name:name,
+  //   status:status
+  // };
+  $.ajax({
+    type: "GET",
+    url: "changestatus/"+id
+  });
+}
+
+function cahangeState(id) {
+  $.ajax({
+    type: "GET",
+    url: "changestate/"+id
+  });
+}

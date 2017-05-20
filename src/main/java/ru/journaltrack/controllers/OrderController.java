@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.journaltrack.domain.db.Order;
 import ru.journaltrack.domain.db.State;
+import ru.journaltrack.repository.OrderRepository;
 import ru.journaltrack.repository.StateRepository;
 import ru.journaltrack.services.OrderService;
 
@@ -19,6 +20,8 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private StateRepository stateRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     @GetMapping(value = "/orders")
     public String home(Pageable pageable, Model model, Principal principal) {
@@ -36,6 +39,20 @@ public class OrderController {
     public @ResponseBody void addState(@RequestBody State state , @PathVariable Long id){
         Order order = orderService.findOne(id);
         state.setOrder(order);
+        stateRepository.save(state);
+    }
+    @GetMapping(value = "/changestatus/{id}")
+    public @ResponseBody void changeStatus( @PathVariable Long id){
+        System.out.println(id);
+        Order order = orderService.findOne(id);
+        order.setStatus(order.isStatus() ? false : true);
+        orderRepository.save(order);
+    }
+    @GetMapping(value = "/changestate/{id}")
+    public @ResponseBody void changeState( @PathVariable Long id){
+        System.out.println(id);
+        State state = stateRepository.findOne(id);
+        state.setStatus(state.isStatus() ? false : true);
         stateRepository.save(state);
     }
     @PostMapping(value = "/neworder")
